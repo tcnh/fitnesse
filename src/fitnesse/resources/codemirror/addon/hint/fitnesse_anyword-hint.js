@@ -14,8 +14,8 @@
 
   var WORD = /([@>!$\w]\w*)([^|]*\|)?/, RANGE = 500;
   var autonames;
-  var autocompletes;
-  
+  var autocompletes = [];
+
     var pageDataUrl = window.location.pathname + "?names";
       $.ajax({
         url: pageDataUrl,
@@ -29,22 +29,42 @@
           alert("Error Accessing Child Page Names");
         }
       });
-	
-	
-    var pageDataUrl = "WikiAutoComplete" + "?pageData";
+
+	if(window.location.pathname.indexOf("ScenarioLibrary") !== -1) {
+	    pageDataUrl = document.referrer + "?autoComplete";
+	} else {
+        var pageDataUrl = window.location.pathname + "?autoComplete";
+	}
       $.ajax({
+        dataType: "json",
         url: pageDataUrl,
 		async: true,
         cache: true,
-        timeout: 2000,
+        timeout: 6000,
         success: function(result) {
-		    autocompletes = result.split(/\r?\n/);
+            $.each(result.classes, function(cIndex, c) {
+             autocompletes.push(c.readableName);
+             $.each(c.availableMethods, function(mIndex, m) {
+                var methodEntry = m.name;
+                if(m.parameters) {
+                  methodEntry += " | " + m.parameters;
+                  }
+                autocompletes.push(methodEntry);
+                });
+             });
+		     $.each(result.scenarios, function(sIndex, s) {
+		      var scenarioEntry = s.name;
+		       if(s.parameters) {
+                scenarioEntry += " | " + s.parameters;
+                }
+                autocompletes.push(scenarioEntry);
+		     });
         },
         error: function() {
-          alert("Error Accessing Page Content from 'WikiAutoComplete'");
+          alert("Error Accessing Page Content from autoComplete Responder");
         }
       });
-  
+
   CodeMirror.registerHelper("hint", "fitnesse_anyword", function(editor, options) {
     var word = options && options.word || WORD;
     var range = options && options.range || RANGE;
@@ -52,7 +72,7 @@
     var end = cur.ch, start = end;
     while (start && word.test(curLine.charAt(start - 1))) --start;
     var curWord = start != end && curLine.slice(start, end).toLocaleLowerCase();
-	
+
 
     var list = options && options.list || [], seen = {};
 	function addIfMatch(newWord){
@@ -62,7 +82,7 @@
           }
 	}
 
-	  
+
     var re = new RegExp(word.source, "g");
     for (var dir = -1; dir <= 1; dir += 2) {
       var line = cur.line, endLine = Math.min(Math.max(line + dir * range, editor.firstLine()), editor.lastLine()) + dir;
