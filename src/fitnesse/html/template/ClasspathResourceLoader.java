@@ -2,12 +2,12 @@ package fitnesse.html.template;
 
 import java.io.InputStream;
 
+import fitnesse.util.ClassUtils;
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.resource.Resource;
 import org.apache.velocity.runtime.resource.loader.ResourceLoader;
-import org.apache.velocity.util.ClassUtils;
 import org.apache.velocity.util.ExceptionUtils;
 
 /**
@@ -17,7 +17,7 @@ import org.apache.velocity.util.ExceptionUtils;
 public class ClasspathResourceLoader extends ResourceLoader {
 
   private String base;
-  
+
   @Override
   public long getLastModified(Resource resource) {
     return 0;
@@ -25,7 +25,7 @@ public class ClasspathResourceLoader extends ResourceLoader {
 
   @Override
   public InputStream getResourceStream(String name) throws ResourceNotFoundException {
-    InputStream result = null;
+    InputStream result;
 
     if (StringUtils.isEmpty(name)) {
       throw new ResourceNotFoundException("No template name provided");
@@ -33,7 +33,10 @@ public class ClasspathResourceLoader extends ResourceLoader {
 
     String path = base + name;
     try {
-      result = ClassUtils.getResourceAsStream(getClass(), path);
+
+      ClassLoader cl = ClassUtils.getClassLoader();
+      result = cl.getResourceAsStream(path);
+
     } catch (Exception fnfe) {
       throw (ResourceNotFoundException) ExceptionUtils.createWithCause(
           ResourceNotFoundException.class, "problem with template: " + path, fnfe);
