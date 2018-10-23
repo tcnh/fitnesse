@@ -93,9 +93,9 @@ CodeMirror.defineSimpleMode("fitnesse", {
   // Here you can find all markup that Fitnesse uses
   start: [
     //Bold
-    {regex: /'''(?:[^\\]|\\.)*?'''/, token: "variable-2"},
+    {regex: /'''(?:[^\\]|\\.)*?'''/, token: "bold"},
     //Italics
-    {regex: /''(?:[^\\]|\\.)*?''/, token: "variable"},
+    {regex: /''(?:[^\\]|\\.)*?''/, token: "italic"},
     //Strike
     {regex: /--(?:[^\\]|\\.)*?--/, token: "variable-3"},
     //Style
@@ -119,11 +119,12 @@ CodeMirror.defineSimpleMode("fitnesse", {
     //Classpath
     {regex: /!path .+/, token: "quote"},
     //Table
-    {regex: /\|.*/, token: "variable-3"},
+    {regex: /^\|\b(?<!\$|\$`|@)[^$#@]*|\|[^$#@]*|\b(?<!\$|\$`)[^$#@]*\|$/, token: "variable-3"},
     //Hash-Table
-    {regex: /!{.*}/, token: "link"},
+    //{regex: /!{.*}/, token: "link"},
     //Collapsable Sections
     {regex: /!\*+ .*/, token: "header"},
+    {regex: /!\*+> .*/, token: "header"},
     {regex: /\*+!/, token: "header"},
     //Table of contents
     {regex: /!contents.*/, token: "keyword"},
@@ -135,9 +136,14 @@ CodeMirror.defineSimpleMode("fitnesse", {
     {regex: /!lastmodified/, token: "keyword"},
     //Today
     {regex: /!today/, token: "keyword"},
-    {regex: /0x[a-f\d]+|[-+]?(?:\.\d+|\d+\.?\d*)(?:e[-+]?\d+)?/i,
-     token: "number"},
+    {regex: /0x[a-f\d]+|[-+]?(?:\.\d+|\d+\.?\d*)(?:e[-+]?\d+)?/i, token: "number"},
+    //Other wiki symbols
+    {regex: /![\w]+/, token: "keyword"},
      //comment
-    {regex: /#.*/, token: "comment"}
+    {regex: /#.*/, token: "comment"},
+     //Slim Symbol
+    {regex: /\$[^\$\s\|\!]+/, token: "variable"},
+    //Scenario symbol
+    {regex: /\@{\w+}/, token: "variable"},
   ]
 });

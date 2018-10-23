@@ -29,7 +29,7 @@ var Wysiwyg = function (textarea, options) {
         foldGutter: true,
         showCursorWhenSelecting: true,
         viewportMargin: Infinity,
-        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+        gutters: ["CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter"],
 		extraKeys: {
 			"Ctrl-Space": "autocomplete"
 		}

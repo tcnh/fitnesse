@@ -87,16 +87,19 @@ public class ColoredSlimTable extends SymbolTypeDecorator{
 
                 if(rowCount == 1){
                     writer.putAttribute(CLASS_PROPERTY, "slimRowTitle");
-                }else if(isSecondRowTitle && rowCount == 2){
-                    writer.putAttribute(CLASS_PROPERTY, "slimRowTitle");
-                }else if(isFirstColumnTitle){
-                    byte[] bodyBytes = body.getBytes();
-                    int sum = 0;
-                    for(byte b: bodyBytes){
-                        sum = sum + (int) b;
-                    }
-                    writer.putAttribute(CLASS_PROPERTY, "slimRowColor" + (sum % 10));
-                } else {
+                }else if(isSecondRowTitle && rowCount == 2) {
+                  writer.putAttribute(CLASS_PROPERTY, "slimRowTitle");
+                }
+                //Disabled because it makes tables less readable
+//                else if(isFirstColumnTitle){
+//                    byte[] bodyBytes = body.getBytes();
+//                    int sum = 0;
+//                    for(byte b: bodyBytes){
+//                        sum = sum + (int) b;
+//                    }
+//                    writer.putAttribute(CLASS_PROPERTY, "slimRowColor" + (sum % 10));
+//                }
+                else {
                     writer.putAttribute(CLASS_PROPERTY, "slimRowColor" + (rowCount % 2));
                 }
             }
