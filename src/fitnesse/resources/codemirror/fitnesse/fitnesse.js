@@ -119,7 +119,7 @@ CodeMirror.defineSimpleMode("fitnesse", {
     //Classpath
     {regex: /!path .+/, token: "quote"},
     //Table
-    {regex: /^\|\b[^$#@]*|\|[^$#@]*|\b[^$#@]*\|$/, token: "variable-3"},
+    {regex: /^\|\b[^$#@!{}]*|\|[^$#@!{}]*|\b[^$#@!{}]*\|$/, token: "variable-3"},
     //Hash-Table
     //{regex: /!{.*}/, token: "link"},
     //Collapsable Sections
