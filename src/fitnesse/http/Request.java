@@ -67,6 +67,17 @@ public class Request {
     hasBeenParsed = true;
   }
 
+  public String getCookie(String name) {
+    String[] rawCookies = headers.get("cookie").split(";");
+    for(String cookie : rawCookies) {
+      String[] pair = cookie.split("=");
+      if(pair[0].trim().equalsIgnoreCase(name)) {
+        return pair[1].trim();
+      }
+    }
+    return "";
+  }
+
   private void readAndParseRequestLine() throws IOException, HttpException {
     requestLine = input.readLine();
     Matcher match = requestLinePattern.matcher(requestLine);
@@ -260,7 +271,7 @@ public class Request {
     buffer.append("Request URI:  ").append(requestURI).append('\n');
     buffer.append("Resource:     ").append(resource).append('\n');
     buffer.append("Query String: ").append(queryString).append('\n');
-    buffer.append("Hearders: (").append(headers.size()).append(")\n");
+    buffer.append("Headers: (").append(headers.size()).append(")\n");
     addMap(headers, buffer);
     buffer.append("Form Inputs: (").append(inputs.size()).append(")\n");
     addMap(inputs, buffer);

@@ -6,5 +6,6 @@ import fitnesse.http.Request;
 import fitnesse.http.Response;
 
 public interface Responder {
+
   Response makeResponse(FitNesseContext context, Request request) throws Exception;
 }
