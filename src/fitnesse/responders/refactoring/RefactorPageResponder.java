@@ -23,12 +23,10 @@ import fitnesse.wiki.WikiPagePath;
 import fitnesse.wiki.WikiPageProperty;
 
 public class RefactorPageResponder implements SecureResponder {
-  Request requestData;
 
   @Override
   public Response makeResponse(FitNesseContext context, Request request) throws Exception {
     String resource = request.getResource();
-    requestData = request;
     String tags = "";
     WikiPage wikiPage = null;
     if(context.getRootPage() != null){
@@ -40,7 +38,7 @@ public class RefactorPageResponder implements SecureResponder {
       }
     }
 
-    HtmlPage page = context.pageFactory.newPage(requestData);
+    HtmlPage page = context.pageFactory.newPage(request);
     String type = request.getInput("type");
 
     page.setMainTemplate("refactorForm");

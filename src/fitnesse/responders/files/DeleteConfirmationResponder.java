@@ -16,7 +16,7 @@ import fitnesse.html.template.PageTitle;
 
 public class DeleteConfirmationResponder implements SecureResponder {
   private String resource;
-  Request requestData;
+  private Request requestData;
 
   @Override
   public Response makeResponse(FitNesseContext context, Request request) throws Exception {

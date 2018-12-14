@@ -16,7 +16,7 @@ import fitnesse.wiki.WikiPage;
 import fitnesse.wiki.WikiPagePath;
 
 public abstract class BasicResponder implements SecureResponder {
-  Request requestData;
+  protected Request requestData;
 
   @Override
   public Response makeResponse(FitNesseContext context, Request request) throws Exception {
