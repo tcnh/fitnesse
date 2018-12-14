@@ -119,7 +119,7 @@ CodeMirror.defineSimpleMode("fitnesse", {
     //Classpath
     {regex: /!path .+/, token: "quote"},
     //Table
-    {regex: /^\|\b[^$#@!{}]*|\|[^$#@!{}]*|\b[^$#@!{}]*\|$/, token: "variable-3"},
+    {regex: /^\|\b[^$#@{}]*|\|[^$#@{}]*|\b[^$#@{}]*\|$/, token: "variable-3"},
     //Hash-Table
     //{regex: /!{.*}/, token: "link"},
     //Collapsable Sections
@@ -145,5 +145,7 @@ CodeMirror.defineSimpleMode("fitnesse", {
     {regex: /\$[^\$\s\|\!]+/, token: "variable"},
     //Scenario symbol
     {regex: /\@{\w+}/, token: "variable"},
+    //literals
+    {regex: /!-.*?-!/, token: "keyword"}
   ]
 });
