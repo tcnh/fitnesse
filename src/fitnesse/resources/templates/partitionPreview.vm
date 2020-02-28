@@ -18,10 +18,10 @@
    <td>$page</td>
    #foreach($dimension in $position.getGroup())
    <td>$partitioning.formatDimension($dimension)</td>
-    #end
-    <td>$position.getPositionInGroup()</td>
+   #end
+   <td>$position.getPositionInGroup()</td>
+   #end
   </tr>
-  #end
   #end
  </tbody>
 </table>
