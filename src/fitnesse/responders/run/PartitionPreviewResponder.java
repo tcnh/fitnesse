@@ -66,7 +66,6 @@ public class PartitionPreviewResponder extends ChunkingResponder {
     page.setPageTitle(new PageTitle(PathParser.parse(request.getResource())));
     page.setNavTemplate("viewNav");
     page.put("partitionCount", getPartitionCount());
-    page.put("viewLocation", request.getResource());
     page.put("partitioning", getPagesToRun());
     page.setMainTemplate("partitionPreview");
 
